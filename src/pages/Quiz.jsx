@@ -3,10 +3,9 @@ import { Outlet } from 'react-router-dom'
 
 const Quiz = () => {
   return (
-    <>
-    <div>Quiz</div>
-    
-    </>
+    <main className='section-center'>
+     <button className='btn'>Get Back</button>
+    </main>
     
   )
 }

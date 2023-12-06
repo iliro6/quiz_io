@@ -12,7 +12,7 @@ export const categories = [
     desc: "you can test your knowledge in sports such as basketball , football and soccer ",
     icon: <MdOutlineSportsBasketball />,
     color: "#ff7126",
-    id: 1000,
+    id: 21,
     selected: false,
   },
   {
@@ -20,7 +20,7 @@ export const categories = [
     desc: "what do you know about your past? history is everything in this life, test your knowledge",
     icon: <MdHistoryEdu />,
     color: "#1ea81e",
-    id: 2000,
+    id: 10,
     selected: false,
   },
   {
@@ -28,7 +28,7 @@ export const categories = [
     desc: "countries are defined by their artists because they are the creators of their art",
     icon: <MdArtTrack />,
     color: "#e65870",
-    id: 3000,
+    id:25 ,
     selected: false,
   },
   {
@@ -36,7 +36,7 @@ export const categories = [
     desc: "computers are the keys to progress in the future,lets improve your knowledge",
     icon: <MdComputer />,
     color: "#34b4e9",
-    id: 4000,
+    id:18 ,
     selected: false,
   },
 ];

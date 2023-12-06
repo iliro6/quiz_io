@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Categories from "../components/categories";
 import { Outlet, useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const QuizContainer = () => {
   const navigate = useNavigate();
+  const { selected } = useSelector((store) => store.category);
   return (
     <Wrapper>
       <div className="starting-section">
@@ -18,9 +19,10 @@ const QuizContainer = () => {
         </div>
         <button
           onClick={() => {
-            navigate('/quiz')
+            navigate("/quiz");
           }}
           className="btn start-btn"
+          disabled={!selected ? true : false}
         >
           Start Quiz
         </button>
@@ -52,11 +54,10 @@ const Wrapper = styled.div`
     .starting-section p {
       display: none;
     }
-   
+
     .categories p {
-     display: inline;
+      display: inline;
     }
-    
   }
   .categories {
     width: 80%;
@@ -68,7 +69,7 @@ const Wrapper = styled.div`
   button {
     margin-top: 90px;
   }
-  .start-btn{
+  .start-btn {
     margin-bottom: 60px;
   }
 `;
