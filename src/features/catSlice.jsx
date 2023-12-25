@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { categories } from "../data/data";
+import axios from "axios";
 
 const initialState = {
   selected: "",
@@ -7,6 +8,18 @@ const initialState = {
   selectedNumber: 0,
   url: "",
 };
+
+export const getCatItems = createAsyncThunk(
+  "category/getQuestions",
+  async (_, THAPI) => {
+    try {
+      const res = await axios(THAPI.getState().category.url);
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 const categorySlice = createSlice({
   name: "category",
@@ -32,7 +45,23 @@ const categorySlice = createSlice({
       );
       state.selectedNumber = selectedItem.id;
       state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber.toString()}&difficulty=medium&type=multiple`;
+      
+      state.selected = selectedItem.category;
     },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(getCatItems.pending, (state) => {
+      
+        
+      })
+      .addCase(getCatItems.fulfilled, (state, action) => {
+        state[`data${state.selected}`] = action.payload;
+      })
+      .addCase(getCatItems.rejected, (state) => {
+        null;
+      });
   },
 });
 

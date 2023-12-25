@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { IoIosRadioButtonOff, IoIosRadioButtonOn } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectItem, updateUrl } from "../features/catSlice";
+import { SelectItem, updateUrl,getCatItems } from "../features/catSlice";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Categories = () => {
@@ -16,6 +16,7 @@ const Categories = () => {
             onClick={() => {
               dispatch(SelectItem(item.id));
                dispatch(updateUrl(item.id));
+              
             }}
             style={{ backgroundColor: item.color }}
             key={item.id}

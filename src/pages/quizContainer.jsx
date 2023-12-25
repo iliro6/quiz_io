@@ -2,10 +2,15 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import Categories from "../components/categories";
 import { Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 const QuizContainer = () => {
   const navigate = useNavigate();
+  
   const { selected } = useSelector((store) => store.category);
+
+ 
+
   return (
     <Wrapper>
       <div className="starting-section">

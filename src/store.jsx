@@ -1,8 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import category from  './features/catSlice'
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import category from "./features/catSlice";
 
 export const store = configureStore({
-  reducer:{
-    category
-  }
+  reducer: {
+    category,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });

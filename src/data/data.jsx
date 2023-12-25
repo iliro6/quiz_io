@@ -20,7 +20,7 @@ export const categories = [
     desc: "what do you know about your past? history is everything in this life, test your knowledge",
     icon: <MdHistoryEdu />,
     color: "#1ea81e",
-    id: 10,
+    id: 23,
     selected: false,
   },
   {
@@ -28,7 +28,7 @@ export const categories = [
     desc: "countries are defined by their artists because they are the creators of their art",
     icon: <MdArtTrack />,
     color: "#e65870",
-    id:25 ,
+    id:25,
     selected: false,
   },
   {
