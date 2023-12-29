@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { QuizContainer, Categories, Navbar, Quiz, Error } from "./pages";
+import { QuizContainer, Navbar, Quiz, Error } from "./pages";
 
 function App() {
   return (

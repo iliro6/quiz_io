@@ -15,9 +15,7 @@ export const getCatItems = createAsyncThunk(
     try {
       const res = await axios(THAPI.getState().category.url);
       return res.data;
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 );
 
@@ -45,17 +43,14 @@ const categorySlice = createSlice({
       );
       state.selectedNumber = selectedItem.id;
       state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber.toString()}&difficulty=medium&type=multiple`;
-      
+
       state.selected = selectedItem.category;
     },
   },
 
   extraReducers: (builder) => {
     builder
-      .addCase(getCatItems.pending, (state) => {
-      
-        
-      })
+      .addCase(getCatItems.pending, (state) => {})
       .addCase(getCatItems.fulfilled, (state, action) => {
         state[`data${state.selected}`] = action.payload;
       })
