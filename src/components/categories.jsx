@@ -39,23 +39,23 @@ const Categories = () => {
 };
 
 const Wrapper = styled.div`
-  margin-top: -40px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
   width: 100%;
   /* box-sizing: content-box; */
-
+  
   @media (max-width: 1020px) {
     grid-template-columns: repeat(2, 1fr);
   }
-
+  
   @media (max-width: 651px) {
     grid-gap: 10px;
   }
-
+  
   @media (max-width: 525px) {
+    margin-top: -40px;
     grid-template-columns: repeat(1, 1fr);
   }
 
