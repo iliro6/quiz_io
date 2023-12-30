@@ -26,7 +26,7 @@ const QuizContainer = () => {
           onClick={() => {
             navigate("/quiz");
           }}
-          className="btn start-btn"
+          className="btn start-btn btn-main"
           disabled={!selected ? true : false}
         >
           Start Quiz

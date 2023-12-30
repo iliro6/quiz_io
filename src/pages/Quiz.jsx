@@ -21,23 +21,26 @@ const Quiz = () => {
   return (
     <main className="section-center">
       {selected === "" ? (
-        <Wrapper>
+        <ErrorWrapper>
           <h2>oops!</h2>
           <h5>no category selected</h5>
           <button onClick={()=>{
             navigate('/');
           }} className="btn">choose one</button>
-        </Wrapper>
+        </ErrorWrapper>
       ) : null}
     </main>
   );
 };
 
-const Wrapper = styled.div`
+const ErrorWrapper = styled.div`
  text-align: center;
   button{
     margin-top: 10px;
-    border-radius: 10px;
+  
+  }
+  @media (max-width:525px) {
+    margin-top: 50px;
   }
 `
 

@@ -116,7 +116,7 @@ p {
 }
 
 .btn{
-  border-radius: 40px;
+  border-radius: 10px;
   border: none;
   background-color: rgb(145, 132, 244);
   font-size: 1rem;
@@ -126,6 +126,10 @@ p {
   padding: 12px 44px;
   margin-top: 40px;
   transition: all 1s;
+}
+
+.btn-main{
+  border-radius: 40px;
 }
 
 .btn:hover{

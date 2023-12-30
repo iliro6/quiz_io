@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import { MdOutlineError } from "react-icons/md";
-import crossWall from "../assets/cross.png";
-import {  useNavigate } from "react-router-dom";
+import { VscDebugDisconnect } from "react-icons/vsc";
+import { useNavigate } from "react-router-dom";
 
 const Error = () => {
   const navigate = useNavigate();
   return (
     <Wrapper className="section-center">
-      <img src={crossWall} alt="cross-wall" />
       <main>
         <h1>404</h1>
-        <h3>Error</h3>
+        <div className="icon-container">
+          <h3>Error</h3>
+           <div className="line-1"></div>
+           <div className="line-2"></div>
+          <VscDebugDisconnect className="icon" />
+        </div>
         <button
           onClick={() => {
             navigate("/");
@@ -27,10 +31,18 @@ const Error = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;
+  
+
+  .icon {
+    width: 45px;
+    height: 45px;
+  }
+  .icon-container {
+    position: relative;
+  }
 
   img {
     object-fit: cover;
@@ -50,12 +62,55 @@ const Wrapper = styled.div`
     overflow: hidden;
     position: absolute;
     top: 250px;
+    border: 2px solid black;
   }
   button {
     background-color: red;
+  
+  }
+  .line-1 {
+    width: 105px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 83px;
+    left: -47px;
+  }
+  .line-2 {
+    width: 110px;
+    height: 2px;
+    background-color: black;
+    position: absolute;
+    top: 47px;
+    left: 93px;
   }
   button:hover {
     background-color: #6f0000;
+  }
+
+  @media (max-width: 800px) {
+    
+    .line-1 {
+      width: 105px;
+      height: 2px;
+      background-color: black;
+      position: absolute;
+      top: 81px;
+      left: -47px;
+    }
+    
+    main{
+      margin-top: -45px;
+    }
+
+    .line-2 {
+      width: 110px;
+      height: 2px;
+      background-color: black;
+      position: absolute;
+      top: 45px;
+      left: 93px;
+    }
   }
 `;
 

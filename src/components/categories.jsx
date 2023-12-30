@@ -39,6 +39,7 @@ const Categories = () => {
 };
 
 const Wrapper = styled.div`
+  margin-top: -40px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(4, 1fr);
