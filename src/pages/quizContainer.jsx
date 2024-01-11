@@ -6,10 +6,7 @@ import { useSelector } from "react-redux";
 
 const QuizContainer = () => {
   const navigate = useNavigate();
-  
   const { selected } = useSelector((store) => store.category);
-
- 
 
   return (
     <Wrapper>

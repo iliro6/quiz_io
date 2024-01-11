@@ -1,12 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { categories } from "../data/data";
 import axios from "axios";
+import { useEffect } from "react";
+
+const selectedFromLocal = JSON.parse(localStorage.getItem(`selected`));
+const selectedNumFromLocal = JSON.parse(localStorage.getItem(`selectedNumber`));
 
 const initialState = {
-  selected: "",
+  selected: selectedFromLocal,
   categories: categories,
-  selectedNumber: 0,
+  selectedNumber: selectedNumFromLocal,
   url: "",
+  isLoading: false,
 };
 
 export const getCatItems = createAsyncThunk(
@@ -23,6 +28,11 @@ const categorySlice = createSlice({
   name: "category",
   initialState,
   reducers: {
+    getLocalItems: (state, action) => {
+     
+      state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficulty=medium&type=multiple`;
+    },
+
     SelectItem: (state, action) => {
       const selectedItem = state.categories.find(
         (id) => action.payload === id.id
@@ -42,24 +52,40 @@ const categorySlice = createSlice({
         (id) => action.payload === id.id
       );
       state.selectedNumber = selectedItem.id;
-      state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber.toString()}&difficulty=medium&type=multiple`;
+      state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficulty=medium&type=multiple`;
 
       state.selected = selectedItem.category;
     },
   },
 
   extraReducers: (builder) => {
-    builder
-      .addCase(getCatItems.pending, (state) => {})
-      .addCase(getCatItems.fulfilled, (state, action) => {
-        state[`data${state.selected}`] = action.payload;
-      })
-      .addCase(getCatItems.rejected, (state) => {
-        null;
-      });
+    builder.addCase(getCatItems.pending, (state) => {
+      state.isLoading = true;
+      state[`data${state.selected}`] = [];
+    });
+    builder.addCase(getCatItems.fulfilled, (state, action) => {
+      state.isLoading = false;
+      const { results } = action.payload;
+      if(results){
+
+        state[`data${state.selected}`] = results;
+      }
+
+      
+
+      localStorage.setItem("selected", JSON.stringify(state.selected));
+      localStorage.setItem(
+        "selectedNumber",
+        JSON.stringify(state.selectedNumber)
+      );
+    });
+    builder.addCase(getCatItems.rejected, (state) => {
+      null;
+    });
   },
 });
 
 export default categorySlice.reducer;
 
-export const { SelectItem, updateUrl } = categorySlice.actions;
+export const { SelectItem, updateUrl, getLocalItems, updateLocalStorage } =
+  categorySlice.actions;
