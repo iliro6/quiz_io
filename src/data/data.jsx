@@ -4,6 +4,7 @@ import {
   MdComputer,
   MdArtTrack,
   MdOutlineSportsBasketball,
+  MdFlutterDash
 } from "react-icons/md";
 
 export const categories = [
@@ -24,11 +25,11 @@ export const categories = [
     selected: false,
   },
   {
-    category: "art",
-    desc: "countries are defined by their artists because they are the creators of their art",
-    icon: <MdArtTrack />,
+    category: "animals",
+    desc: "what do you know about animals? learn about these wonderful creatures by testing yourself.",
+    icon: <MdFlutterDash />,
     color: "#e65870",
-    id:25,
+    id: 27,
     selected: false,
   },
   {
@@ -36,7 +37,7 @@ export const categories = [
     desc: "computers are the keys to progress in the future,lets improve your knowledge",
     icon: <MdComputer />,
     color: "#34b4e9",
-    id:18 ,
+    id: 18,
     selected: false,
   },
 ];
