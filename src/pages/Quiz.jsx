@@ -14,11 +14,18 @@ const Quiz = () => {
 
   useEffect(() => {
     const timeoutid = setTimeout(() => {
-      dispatch(getCatItems());
+       let dataTemp = `data${selected}`;
+     
+      if (!category[dataTemp]) { 
+        dispatch(getCatItems());
+      } else{
+        null;
+        console.log("lezgo");
+      }
     }, 1000);
     return () => {
-      clearTimeout(timeoutid)
-    }
+      clearTimeout(timeoutid);
+    };
   }, []);
 
   if (isLoading) {

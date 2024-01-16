@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import { categories } from "../data/data";
 import axios from "axios";
 import { useEffect } from "react";
@@ -29,7 +29,11 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     getLocalItems: (state, action) => {
+      state[`data${state.selected}`] = JSON.parse(
+        localStorage.getItem(`data${state.selected}`)
+      );
      
+
       state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficulty=medium&type=multiple`;
     },
 
@@ -62,17 +66,16 @@ const categorySlice = createSlice({
     builder.addCase(getCatItems.pending, (state) => {
       state.isLoading = true;
       state[`data${state.selected}`] = [];
+     
     });
     builder.addCase(getCatItems.fulfilled, (state, action) => {
       state.isLoading = false;
-      const { results } = action.payload;
-      if(results){
-
-        state[`data${state.selected}`] = results;
+      const result = action.payload?.results || [];
+      if (result) {
+        state[`data${state.selected}`] = result;
       }
-
-      
-
+      const newArr = categories.map((item, index) => item.category);
+      localStorage.setItem(`data${state.selected}`, JSON.stringify(result));
       localStorage.setItem("selected", JSON.stringify(state.selected));
       localStorage.setItem(
         "selectedNumber",
