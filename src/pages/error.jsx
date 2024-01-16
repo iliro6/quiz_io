@@ -18,14 +18,12 @@ const Error = ({error_type}) => {
         </div>
         <button
           onClick={() => {
-            if(error_type==='fetching'){
-              navigate(0)
-            }
+           
             navigate("/");
           }}
           className="btn"
         >
-          {error_type==='fetching' ? 'refresh':'get back'}
+          {'get back'}
         </button>
       </main>
     </Wrapper>
