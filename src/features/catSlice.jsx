@@ -12,6 +12,8 @@ const initialState = {
   selectedNumber: selectedNumFromLocal,
   url: "",
   isLoading: false,
+  error:false,
+  
 };
 
 export const getCatItems = createAsyncThunk(
@@ -20,7 +22,12 @@ export const getCatItems = createAsyncThunk(
     try {
       const res = await axios(THAPI.getState().category.url);
       return res.data;
-    } catch (error) {}
+    } catch (error) {
+     console.log(error);
+     if(error.response.status >= 400){
+      THAPI.getState().category.error = true;
+     }
+    }
   }
 );
 
@@ -29,12 +36,7 @@ const categorySlice = createSlice({
   initialState,
   reducers: {
     getLocalItems: (state, action) => {
-      state[`data${state.selected}`] = JSON.parse(
-        localStorage.getItem(`data${state.selected}`)
-      );
-     
-
-      state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficulty=medium&type=multiple`;
+      state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficul=mype=multiple`;
     },
 
     SelectItem: (state, action) => {
@@ -65,6 +67,7 @@ const categorySlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getCatItems.pending, (state) => {
       state.isLoading = true;
+      state.error = false;
       state[`data${state.selected}`] = [];
      
     });
@@ -73,9 +76,11 @@ const categorySlice = createSlice({
       const result = action.payload?.results || [];
       if (result) {
         state[`data${state.selected}`] = result;
+        
       }
-      const newArr = categories.map((item, index) => item.category);
-      localStorage.setItem(`data${state.selected}`, JSON.stringify(result));
+
+     
+      
       localStorage.setItem("selected", JSON.stringify(state.selected));
       localStorage.setItem(
         "selectedNumber",
@@ -83,7 +88,8 @@ const categorySlice = createSlice({
       );
     });
     builder.addCase(getCatItems.rejected, (state) => {
-      null;
+      state.error = true;
+      state.isLoading = false
     });
   },
 });

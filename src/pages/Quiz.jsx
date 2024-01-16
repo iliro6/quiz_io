@@ -4,37 +4,41 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../components/Loading";
+import Error from "../pages/error";
 import DataContainer from "../components/dataContainer";
 
 const Quiz = () => {
   const dispatch = useDispatch();
-  const { selected, isLoading } = useSelector((store) => store.category);
+  const { selected, isLoading, error } = useSelector((store) => store.category);
   const category = useSelector((store) => store.category);
   const navigate = useNavigate();
 
   useEffect(() => {
     const timeoutid = setTimeout(() => {
-       let dataTemp = `data${selected}`;
-     
-      if (!category[dataTemp]) { 
+      let dataTemp = `data${selected}`;
+
+      
         dispatch(getCatItems());
-      } else{
-        null;
-        console.log("lezgo");
-      }
-    }, 1000);
+      
+    }, 0);
     return () => {
       clearTimeout(timeoutid);
     };
   }, []);
 
+
+
   if (isLoading) {
     return <Loading />;
   }
 
+  if(error){
+    return <Error error_type={'fetching'}/>
+  }
+
   return (
     <main className="section-center">
-      {selected === "" ? (
+      {selected === null ? (
         <ErrorWrapper>
           <h2>oops!</h2>
           <h5>no category selected</h5>

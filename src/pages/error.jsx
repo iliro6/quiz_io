@@ -4,7 +4,7 @@ import { MdOutlineError } from "react-icons/md";
 import { VscDebugDisconnect } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 
-const Error = () => {
+const Error = ({error_type}) => {
   const navigate = useNavigate();
   return (
     <Wrapper className="section-center">
@@ -18,11 +18,14 @@ const Error = () => {
         </div>
         <button
           onClick={() => {
+            if(error_type==='fetching'){
+              navigate(0)
+            }
             navigate("/");
           }}
           className="btn"
         >
-          get back
+          {error_type==='fetching' ? 'refresh':'get back'}
         </button>
       </main>
     </Wrapper>
