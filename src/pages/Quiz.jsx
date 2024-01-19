@@ -53,7 +53,7 @@ const Quiz = () => {
         </ErrorWrapper>
       ) : (
         category[`data${selected}`]?.map((item, index) => {
-          return <DataContainer {...item} key={Math.random() * 100 * index} />;
+          return <DataContainer  index={index} {...item} key={Math.random() * 100 * index} />;
         })
       )}
     </main>
