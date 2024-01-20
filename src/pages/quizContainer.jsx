@@ -4,6 +4,7 @@ import Categories from "../components/categories";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
 const QuizContainer = () => {
   const navigate = useNavigate();
   const { selected } = useSelector((store) => store.category);

@@ -6,6 +6,7 @@ import {
 import { categories } from "../data/data";
 import axios from "axios";
 import { useEffect } from "react";
+import { shuffle } from "../util/functions";
 
 const selectedFromLocal = JSON.parse(localStorage.getItem(`selected`));
 const selectedNumFromLocal = JSON.parse(localStorage.getItem(`selectedNumber`));
@@ -17,6 +18,7 @@ const initialState = {
   url: "",
   isLoading: false,
   error: false,
+  
 };
 
 export const getCatItems = createAsyncThunk(
@@ -40,6 +42,7 @@ const categorySlice = createSlice({
   reducers: {
     getLocalItems: (state, action) => {
       state.url = `https://opentdb.com/api.php?amount=10&category=${state.selectedNumber}&difficul=mype=multiple`;
+      state.localCheck = true;
     },
 
     SelectItem: (state, action) => {
@@ -83,6 +86,9 @@ const categorySlice = createSlice({
         }
       );
     },
+    handleShuffle: (state, action) => {
+      shuffle(action.payload);
+    },
   },
 
   extraReducers: (builder) => {
@@ -93,19 +99,25 @@ const categorySlice = createSlice({
     });
     builder.addCase(getCatItems.fulfilled, (state, action) => {
       state.isLoading = false;
-      const result = action.payload?.results || [];
-      if (result) {
+      const result = action.payload?.results || null;
+      if (!result) {
+        state.error = true;
+      } else if (result) {
         const modifiedArray = result.map((item) => {
-          return { ...item, selected: "" };
+          let { correct_answer, incorrect_answers } = item;
+          const ShuffledArray = shuffle([...incorrect_answers, correct_answer]);
+          return { ...item, selected: "", ShuffledArray };
         });
 
         state[`data${state.selected}`] = modifiedArray;
       }
+
       localStorage.setItem("selected", JSON.stringify(state.selected));
       localStorage.setItem(
         "selectedNumber",
         JSON.stringify(state.selectedNumber)
       );
+      state.error = false;
     });
     builder.addCase(getCatItems.rejected, (state) => {
       state.error = true;
@@ -122,4 +134,5 @@ export const {
   getLocalItems,
   updateLocalStorage,
   selectChoice,
+  handleShuffle,
 } = categorySlice.actions;

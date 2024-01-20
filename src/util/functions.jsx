@@ -5,15 +5,18 @@ export function unescapeHtml(safe) {
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
-    .replace(/&eacute;/g, "e");
+    .replace(/&eacute;/g, "e")
+    .replace(/&uuml;/g,'u')
 }
 
 export function shuffle(newArr) {
   for (let i = newArr.length - 1; i > 0; i--) {
-    
     const j = Math.floor(Math.random() * (i + 1));
     [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
-    console.log(newArr);
-    return newArr;
   }
+  return newArr;
+}
+
+export function PrimitiveEquality (a,b){
+   return JSON.stringify(a) === JSON.stringify(b);
 }

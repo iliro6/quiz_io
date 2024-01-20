@@ -1,34 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { FaCheckCircle } from "react-icons/fa";
-import { unescapeHtml, shuffle } from "../util/functions";
+import { unescapeHtml } from "../util/functions";
 import { selectChoice } from "../features/catSlice";
 
 
 const DataContainer = (props) => {
-  const {
-    category,
-    question,
-    correct_answer,
-    incorrect_answers,
-    index,
-    selected,
-  } = props;
-  const dispatch = useDispatch();
-  const newArr = [...incorrect_answers, correct_answer];
+  const { question, ShuffledArray, index, selected } = props;
 
-  useEffect(() => {
-    shuffle(newArr);
-    
-  });
+  const dispatch = useDispatch();
 
   return (
     <Wrapper>
       <div className="single_question">
         <h5>{`${index + 1}. ${unescapeHtml(question)}`}</h5>
         <div className="choices">
-          {newArr.map((item, index) => {
+          {ShuffledArray.map((item, index) => {
             const alphabet = "abcdefghijklmnopqrstuvwxyz";
 
             return (
