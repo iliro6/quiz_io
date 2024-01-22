@@ -1,11 +1,6 @@
-import {
-  createSlice,
-  createAsyncThunk,
-  isRejectedWithValue,
-} from "@reduxjs/toolkit";
-import { categories } from "../data/data";
 import axios from "axios";
-import { useEffect } from "react";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { categories } from "../data/data";
 import { shuffle } from "../util/functions";
 
 const selectedFromLocal = JSON.parse(localStorage.getItem(`selected`));
@@ -18,7 +13,7 @@ const initialState = {
   url: "",
   isLoading: false,
   error: false,
-  
+  isModalOpen:false,
 };
 
 export const getCatItems = createAsyncThunk(
@@ -89,6 +84,31 @@ const categorySlice = createSlice({
     handleShuffle: (state, action) => {
       shuffle(action.payload);
     },
+    setupResult: (state, action) => {
+      let count = 0;
+      state[`result${state.selected}`] = { checked: count, uncompleted: 0,wrongs:0 };
+  
+      state[`data${state.selected}`].map((item) => {
+        if (item.correct_answer === item.selected) {
+         
+          state[`result${state.selected}`].checked += 1;
+        }
+        else if(item.selected === ''){
+          state[`result${state.selected}`].uncompleted += 1;
+        }
+        else {
+         state[`result${state.selected}`].wrongs += 1;
+        }
+        
+      });
+    },
+    openModal:(state,action) => {
+     state.isModalOpen = true;
+    },
+    closeModal : (state,action) => {
+      state.isModalOpen = false;
+
+    }
   },
 
   extraReducers: (builder) => {
@@ -106,7 +126,7 @@ const categorySlice = createSlice({
         const modifiedArray = result.map((item) => {
           let { correct_answer, incorrect_answers } = item;
           const ShuffledArray = shuffle([...incorrect_answers, correct_answer]);
-          return { ...item, selected: "", ShuffledArray };
+          return { ...item, selected: "", ShuffledArray, quizResult: {} };
         });
 
         state[`data${state.selected}`] = modifiedArray;
@@ -135,4 +155,7 @@ export const {
   updateLocalStorage,
   selectChoice,
   handleShuffle,
+  setupResult,
+  closeModal,
+  openModal
 } = categorySlice.actions;

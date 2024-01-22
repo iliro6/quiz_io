@@ -1,14 +1,14 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { FaCheckCircle } from "react-icons/fa";
 import { unescapeHtml } from "../util/functions";
-import { selectChoice } from "../features/catSlice";
-
+import { openModal, selectChoice} from "../features/catSlice";
+import Modal from "./modal";
 
 const DataContainer = (props) => {
-  const { question, ShuffledArray, index, selected } = props;
-
+  const { question, ShuffledArray, index, selected,correct_answer,isModalOpen } = props;
+ 
   const dispatch = useDispatch();
 
   return (
@@ -37,6 +37,19 @@ const DataContainer = (props) => {
               </div>
             );
           })}
+          {index === 9 ? (
+            <>
+              <button
+                onClick={() => {
+                  dispatch(openModal())
+                }}
+                className="btn btn-div"
+              >
+                submit
+              </button>
+            
+            </>
+          ) : null}
         </div>
       </div>
     </Wrapper>
@@ -50,6 +63,7 @@ const Wrapper = styled.div`
   display: flex;
   width: 90%;
   margin: 1% 5%;
+  justify-content: center;
   .single_choice {
     position: relative;
   }
@@ -76,6 +90,14 @@ const Wrapper = styled.div`
 
   .choice:hover {
     background-color: rgb(145, 132, 244);
+  }
+
+  .btn-div {
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 1%;
+    margin-bottom: 30px;
+    border-radius: 5px;
   }
 
   .selected {

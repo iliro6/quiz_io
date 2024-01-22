@@ -6,6 +6,7 @@ export function unescapeHtml(safe) {
     .replace(/&quot;/g, '"')
     .replace(/&#039;/g, "'")
     .replace(/&eacute;/g, "e")
+    .replace(/&iacute;/g,'i')
     .replace(/&uuml;/g,'u')
 }
 
