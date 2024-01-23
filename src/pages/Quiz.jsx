@@ -8,7 +8,7 @@ import Error from "../pages/error";
 import DataContainer from "../components/dataContainer";
 import { PrimitiveEquality } from "../util/functions";
 import Modal from "../components/modal";
-
+import Finalresult from "../components/Finalresult";
 
 const Quiz = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const Quiz = () => {
     (store) => store.category
   );
   const category = useSelector((store) => store.category);
-  const {isModalOpen} = useSelector(store=>store.category);
+  const { isModalOpen } = useSelector((store) => store.category);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,45 +44,44 @@ const Quiz = () => {
   if (error) {
     return <Error />;
   }
- 
-  if(isModalOpen){
-    return <Modal/>
+
+  if (isModalOpen) {
+    return <Modal />;
   }
 
-  if (category[`result${selected}`]){
-    return <h2>hiu</h2>
+  if (category[`result${selected}`]) {
+    return <Finalresult result={category[`result${selected}`]} />;
   }
-    return (
-      <main className="section-center">
-        {selected === null ? (
-          <ErrorWrapper>
-            <h2>oops!</h2>
-            <h5>no category selected</h5>
-            <button
-              onClick={() => {
-                navigate("/");
-              }}
-              className="btn"
-            >
-              choose one
-            </button>
-          </ErrorWrapper>
-        ) : (
-          <MainWrapper>
-            {category[`data${selected}`]?.map((item, index) => {
-              return (
-                <DataContainer
-                  index={index}
-                  {...item}
-                  key={Math.random() * 100 * index}
-                />
-              );
-            })}
-            
-          </MainWrapper>
-        )}
-      </main>
-    );
+  return (
+    <main className="section-center">
+      {selected === null ? (
+        <ErrorWrapper>
+          <h2>oops!</h2>
+          <h5>no category selected</h5>
+          <button
+            onClick={() => {
+              navigate("/");
+            }}
+            className="btn"
+          >
+            choose one
+          </button>
+        </ErrorWrapper>
+      ) : (
+        <MainWrapper>
+          {category[`data${selected}`]?.map((item, index) => {
+            return (
+              <DataContainer
+                index={index}
+                {...item}
+                key={Math.random() * 100 * index}
+              />
+            );
+          })}
+        </MainWrapper>
+      )}
+    </main>
+  );
 };
 
 const ErrorWrapper = styled.div`
@@ -97,12 +96,10 @@ const ErrorWrapper = styled.div`
 
 const MainWrapper = styled.div`
   display: flex;
- position: relative;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   margin: 0;
-
-
 `;
 
 export default Quiz;
