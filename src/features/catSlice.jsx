@@ -13,7 +13,7 @@ const initialState = {
   url: "",
   isLoading: false,
   error: false,
-  isModalOpen:false,
+  isModalOpen: false,
 };
 
 export const getCatItems = createAsyncThunk(
@@ -86,29 +86,37 @@ const categorySlice = createSlice({
     },
     setupResult: (state, action) => {
       let count = 0;
-      state[`result${state.selected}`] = { checked: count, uncompleted: 0,wrongs:0 };
-  
+      state[`result${state.selected}`] = {
+        checked: count,
+        uncompleted: 0,
+        wrongs: 0,
+      };
+
       state[`data${state.selected}`].map((item) => {
         if (item.correct_answer === item.selected) {
-         
           state[`result${state.selected}`].checked += 1;
-        }
-        else if(item.selected === ''){
+        } else if (item.selected === "") {
           state[`result${state.selected}`].uncompleted += 1;
+        } else {
+          state[`result${state.selected}`].wrongs += 1;
         }
-        else {
-         state[`result${state.selected}`].wrongs += 1;
-        }
-        
       });
     },
-    openModal:(state,action) => {
-     state.isModalOpen = true;
+    openModal: (state, action) => {
+      state.isModalOpen = true;
     },
-    closeModal : (state,action) => {
+    closeModal: (state, action) => {
       state.isModalOpen = false;
+    },
 
-    }
+    restartTheQuiz: (state, action) => {
+      state[`result${state.selected}`] = null;
+      state[`data${state.selected}`] = state[`data${state.selected}`].map(
+        (item) => {
+          return { ...item, selected: "" };
+        }
+      );
+    },
   },
 
   extraReducers: (builder) => {
@@ -157,5 +165,6 @@ export const {
   handleShuffle,
   setupResult,
   closeModal,
-  openModal
+  openModal,
+  restartTheQuiz,
 } = categorySlice.actions;

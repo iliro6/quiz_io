@@ -8,6 +8,7 @@ export function unescapeHtml(safe) {
     .replace(/&eacute;/g, "e")
     .replace(/&iacute;/g,'i')
     .replace(/&uuml;/g,'u')
+    .replace(/&Ouml;/g,'o');
 }
 
 export function shuffle(newArr) {
