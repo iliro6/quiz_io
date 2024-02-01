@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { IoIosRadioButtonOff, IoIosRadioButtonOn } from "react-icons/io";
 import { useDispatch, useSelector } from "react-redux";
-import { SelectItem, updateUrl,getCatItems } from "../features/catSlice";
-import { Navigate, useNavigate } from "react-router-dom";
+import { SelectItem, updateUrl } from "../features/catSlice";
+
 
 const Categories = () => {
-  const { categories, selected } = useSelector((store) => store.category);
+  const { categories } = useSelector((store) => store.category);
   const dispatch = useDispatch();
   return (
     <Wrapper>

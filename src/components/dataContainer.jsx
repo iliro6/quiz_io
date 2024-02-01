@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { FaCheckCircle } from "react-icons/fa";
 import { unescapeHtml } from "../util/functions";
 import { openModal, selectChoice} from "../features/catSlice";
-import Modal from "./modal";
+
 
 const DataContainer = (props) => {
-  const { question, ShuffledArray, index, selected,correct_answer,isModalOpen } = props;
+  const { question, ShuffledArray, index, selected } = props;
  
   const dispatch = useDispatch();
 

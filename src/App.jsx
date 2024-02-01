@@ -2,16 +2,13 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { QuizContainer, Navbar, Quiz, Error } from "./pages";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { getLocalItems, updateLocalStorage } from "./features/catSlice";
+import { getLocalItems } from "./features/catSlice";
 function App() {
-  const { selected } = useSelector((store) => store.category);
-  const { localStorageUpdating } = (store) => store.category;
+ 
   const dispatch = useDispatch();
   
   useEffect(()=>{
-      
       dispatch(getLocalItems())
-
   },[])
 
 
